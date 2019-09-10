@@ -1,0 +1,54 @@
+---
+title: "Wiederholungsfragen 09.09.2019"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Es gelte: *Studierende, die die Vorlesung aktiv nacharbeiten, bestehen die Klausur*.
+
+Susi arbeit aktiv nach und folgert daraus, dass sie die Klausur besteht.
+
+Welche Schlussart liegt vor?
+
+A.  Induktion
+B.  Deduktion
+C.  Abduktion
+
+\vspace{2cm}
+
+Ist die Aussage *Studierende, die die Vorlesung aktiv nacharbeiten, bestehen die Klausur* im Sinne Poppers eine wissenschaftliche Hypothese?
+
+- Ja
+- Nein
+
+\vspace{2cm}
+
+Die Vorlesung X konnte man auch gut ohne kontinuierliche Mitarbeit bestehen. Dies gilt leider nicht für diese Vorlesung. Welches Gütekritierium des wissenschaftlichen Schlusses *Kontinuierliche Mitarbeit ist zum Bestehen nicht erforderlich* primär verletzt?
+
+A.  Interne Validität
+B.  Externe Validität
+
+\vspace{2cm}
+
+Ist das Merkmal *intensive Nacharbeit* eine manifeste Variable?
+
+- Ja
+- Nein
+
+\vspace{2cm}
+
+Angenommen eine Hochschule misst *intensive Nacharbeit* durch die Anzahl der Stunden, die ein Studierender im Online Campus verbringt. 
+
+Welches Gütekriterium einer Messung ist primär verletzt?
+
+A.  Genauigkeit
+B.  Objektivität
+C.  Reliabilität
+D.  Validität
+
+
