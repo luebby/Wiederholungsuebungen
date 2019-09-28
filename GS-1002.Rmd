@@ -1,0 +1,77 @@
+---
+title: "Wiederholungsfragen 02.10.2019"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Was sagt mensch, wenn bei wiederholter Messung einer Eigenschaft ein sehr anderes Ergebnis gemessen wird?
+
+A.  Die Messung ist nicht objektiv
+B.  Die Messung ist nicht reliabel
+C.  Die Messung ist nicht valide
+
+\vspace{2cm}
+
+Ist die Anzahl der Downloads einer Lernunterlage ein valides Messinstrument für die Güte der Vermittlung der Lerninhalte?
+
+- Ja
+- Nein
+
+\vspace{2cm}
+
+Welches Skalenniveau hat die Variable *Anzahl Downloads einer Lernunterlage*?
+
+A.  Kategorial – nominal
+B.  Kategorial – ordinal
+C.  Numerisch – intervallskaliert
+D.  Numerisch – verhältnisskaliert
+
+\vspace{2cm}
+
+Welches Skalenniveau hat die Variable *Art des Mediums* (Video, Audio, Dokument)?
+
+A.  Kategorial – nominal
+B.  Kategorial – ordinal
+C.  Numerisch – intervallskaliert
+D.  Numerisch – verhältnisskaliert
+
+\vspace{2cm}
+
+Stimmt die Aussage: *kategoriale Variablen sind immer diskret*?
+
+- Ja
+- Nein
+
+
+\vspace{2cm}
+
+Eine Analystin ermittelt im Online-Campus die Anzahl der Downloads je Medium. Um welche Form der Datenerhebung handelt es sich?
+
+A.  Beobachtungsstudie
+B.  Experiment
+
+\vspace{2cm}
+
+Welche Variable ist hier inhaltlich die unabhängige Variable?
+
+A.	Medium 
+B.	Anzahl Downloads 
+
+\vspace{2cm}
+
+Die Analystin stellt fest: *Videos werden häufiger heruntergeladen*. Ist hier eine Kausalaussage *Das Medium Video erhöht die Anzahl der Downloads* gerechtfertigt?
+
+-  Ja
+-  Nein
+
+\vspace{2cm}
+
+Die Analystin fragt im Freundeskreis (Facebook) 10000 Personen, welches Medium sie bevorzugen. Kann sie von ihrem Ergebnis direkt und unverzerrt auf die Population (alle Menschen) schließen?
+
+-  Ja
+-  Nein
