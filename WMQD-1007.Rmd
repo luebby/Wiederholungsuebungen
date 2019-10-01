@@ -36,7 +36,7 @@ C.  Läufer\*in
 
 \vspace{2cm}
 
-Stimmt die Aussage: *Die Variable `geschlecht` ist diskret?
+Stimmt die Aussage: *Die Variable `geschlecht` ist diskret*?
 
 -  Ja
 -  Nein
