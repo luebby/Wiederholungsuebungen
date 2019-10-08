@@ -50,18 +50,20 @@ Histogramm der Laufzeit:
 
 ```{r}
 gf_histogram( ~ zeit, data = B2run_w_2009, binwidth = 5, center = 32.5) %>%
-  gf_rugx() 
+  gf_rugx() %>%
+  gf_lims(x=c(15,55))
 ```
 
 In welchem Bereich fallen die meisten Beobachtungen?
 
-A.  25-35 min.
-B.  35-45 min.
-C.  45-55 min.
+A.  15-25 min.
+B.  25-35 min.
+C.  35-45 min.
+D.  45-55 min.
 
 \vspace{2cm}
 
-Welche Kennzahl beschreibt die Luafzeit einer typischen Läuferin besser?
+Welche Kennzahl beschreibt die Laufzeit einer typischen Läuferin besser?
 
 A.  Mittelwert (`mean`)
 B.  Median (`median`)
