@@ -35,6 +35,15 @@ B.  Ordinal
 C.  Intervallskaliert
 D.  Verhältnisskaliert
 
+\vspace{2cm}
+
+Handelt es sich bei den Beobachtungen um eine zufällige Stichprobe aller FOM Studierenden in Dortmund?
+
+A.  Ja
+B.  Nein
+
+
+
 \newpage
 
 Teildatensatz Frauen, Jahr 2019:
@@ -68,7 +77,7 @@ Welche Kennzahl beschreibt die Laufzeit einer typischen Läuferin besser?
 A.  Mittelwert (`mean`)
 B.  Median (`median`)
 
-\vspace{2cm}
+\newpage
 
 ```{r}
 favstats( ~ zeit, data = B2run_w_2009)
