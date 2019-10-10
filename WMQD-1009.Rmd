@@ -49,7 +49,7 @@ B.  Nein
 Teildatensatz Frauen, Jahr 2019:
 
 ```{r}
-B2run_w_2009 <- B2run %>%
+B2run_w_2019 <- B2run %>%
   filter(geschlecht == "w") %>%
   filter(jahr == 2019) %>%
   select(zeit)
@@ -58,7 +58,7 @@ B2run_w_2009 <- B2run %>%
 Histogramm der Laufzeit:
 
 ```{r}
-gf_histogram( ~ zeit, data = B2run_w_2009, binwidth = 5, center = 32.5) %>%
+gf_histogram( ~ zeit, data = B2run_w_2019, binwidth = 5, center = 32.5) %>%
   gf_rugx() %>%
   gf_lims(x=c(15,55))
 ```
@@ -80,8 +80,8 @@ B.  Median (`median`)
 \newpage
 
 ```{r}
-favstats( ~ zeit, data = B2run_w_2009)
+favstats( ~ zeit, data = B2run_w_2019)
 ```
 
-Interpretieren Sie die Kennzahl `Q1`=`r favstats(~zeit, data = B2run_w_2009)[2]`.
+Interpretieren Sie die Kennzahl `Q1`=`r favstats(~zeit, data = B2run_w_2019)[2]`.
 
