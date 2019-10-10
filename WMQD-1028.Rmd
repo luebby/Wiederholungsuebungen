@@ -1,0 +1,60 @@
+---
+title: "Wiederholungsfragen 28.10.2019"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Die FOM Dortmund beteiligt sich seit mehreren Jahren am B2run Firmenlauf.
+```{r, message=FALSE}
+# Paket laden
+library(mosaic)
+# Daten in R einlesen
+B2run <- read.csv2("B2run.csv")
+# Datenstruktur
+str(B2run)
+# Ersten 6 Zeilen
+head(B2run)
+```
+
+Welches Skalenniveau hat die Variable `person_id`?
+
+A.  Nominal
+B.  Ordinal
+C.  Intervallskaliert
+D.  Verhältnisskaliert
+
+\vspace{2cm}
+
+Handelt es sich bei den Beobachtungen der FOM Läufer\*innen um eine zufällige Stichprobe aller B2run Teilnehmer\*innen aus Dortmund?
+
+A.  Ja
+B.  Nein
+
+
+
+\newpage
+
+Teildatensatz der Frauen, `jahr` als kategoriale Variable definieren:
+
+```{r}
+B2run_w <- B2run %>%
+  filter(geschlecht == "w") %>%
+  mutate(jahr = factor(jahr)) %>%
+  select(jahr, zeit)
+```
+
+Histogramm Boxplot der Laufzeit je Geschlecht:
+
+```{r}
+gf_boxplot(zeit ~ jahr, data = B2run_w) %>%
+  gf_labs(title = "Laufzeit B2run", subtitle = "FOM Dortmund, weiblich")
+```
+
+Was können Sie der Abbildung entnehmen?
+
