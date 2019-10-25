@@ -58,3 +58,33 @@ gf_boxplot(zeit ~ jahr, data = B2run_w) %>%
 
 Was können Sie der Abbildung entnehmen?
 
+\newpage
+
+Analyse der Korrelation $r_{x,y}$ der Laufteiten 2017 und 2018. Aktuell stehe die Werte untereinander (*long format*),zur Berechnung der Korrelation müssen die Werte nebeneinander (*wide format*) stehen:
+
+Datenvorverarbeitung:
+
+```{r, message=FALSE}
+# Paket laden
+library(tidyr)
+
+B2run_cor <-B2run %>%
+  pivot_wider(id_cols = person_id,                        # ID Variable 
+              names_from = jahr, names_prefix = "zeit_",  # Namen der neuen Variablen
+              values_from = zeit) %>%                     # Werte der Variablen
+  select(person_id, zeit_2017, zeit_2018) %>%  # Relevante Variablen auswählen
+  na.omit()   # Beobachtungen mit fehlenden Werten löschen
+```
+
+Für den Korrelationskoeffizienten $r_{\texttt{zeit\_2017, zeit\_2018}}$ gilt dann:
+
+```{r}
+cor(zeit_2018 ~ zeit_2017, data = B2run_cor)
+```
+
+Wie hoch ist der Korrelationskoeffizient  $r_{\texttt{zeit\_2018, zeit\_2017}}$ (`cor(zeit_2017 ~ zeit_2018, data = B2run_cor)`)?
+
+A.  $`r cor(zeit_2017 ~ zeit_2018, data = B2run_cor)`$
+B.  $`r (-1)* cor(zeit_2017 ~ zeit_2018, data = B2run_cor)`$ 
+C.  $1-`r cor(zeit_2017 ~ zeit_2018, data = B2run_cor)`$
+D.  Kann nicht gesagt werden
