@@ -78,12 +78,15 @@ B2run_wide <-B2run %>%
 Für den Korrelationskoeffizienten $r_{\texttt{zeit\_2017, zeit\_2018}}$ gilt dann:
 
 ```{r}
+gf_point(zeit_2018 ~ zeit_2017, data = B2run_wide)
 cor(zeit_2018 ~ zeit_2017, data = B2run_wide)
 ```
+
+\newpage
 
 Wie hoch ist der Korrelationskoeffizient  $r_{\texttt{zeit\_2018, zeit\_2017}}$ (`cor(zeit_2017 ~ zeit_2018, data = B2run_wide)`)?
 
 A.  $`r cor(zeit_2017 ~ zeit_2018, data = B2run_wide)`$
 B.  $`r (-1)* cor(zeit_2017 ~ zeit_2018, data = B2run_wide)`$ 
-C.  $1-`r cor(zeit_2017 ~ zeit_2018, data = B2run_wide)`$
+C.  $\frac{1}{`r cor(zeit_2017 ~ zeit_2018, data = B2run_wide)`}$
 D.  Kann nicht gesagt werden
