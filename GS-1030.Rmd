@@ -1,0 +1,50 @@
+---
+title: "Wiederholungsfragen 30.10.2019"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Welches Gütekritierium empirisches Forschung kann durch eine zufällige Stichprobe positiv beeinflusst werden?
+
+A.  Interne Validität
+B.  Externe Validität
+
+\vspace{2cm}
+
+Die FOM Dortmund beteiligt sich seit mehreren Jahren am B2run Firmenlauf.^[[https://www.b2run.de/run/de/de/infos/was-ist-b2run/index.html](https://www.b2run.de/run/de/de/infos/was-ist-b2run/index.html)]
+```{r, message=FALSE}
+# Paket laden
+library(mosaic)
+# Daten in R einlesen
+B2run <- read.csv2("B2run.csv")
+# Datenstruktur
+str(B2run)
+# Ersten 6 Zeilen
+head(B2run)
+```
+
+Was sind hier die Beobachtungseinheiten, d.h., auf welcher Ebene liegen die Daten vor?
+
+A.  Unternehmen
+B.  Jahr
+C.  Läufer\*in
+
+\newpage
+
+Stimmt die Aussage: *Die Variable `geschlecht` ist diskret*?
+
+-  Ja
+-  Nein
+
+\vspace{2cm}
+
+```{r}
+mosaicplot(jahr ~ geschlecht, data = B2run, color = TRUE)
+```
+
+Was können Sie dem Mosaikplot entnehmen?
