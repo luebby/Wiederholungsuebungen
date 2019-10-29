@@ -49,7 +49,7 @@ B2run_w <- B2run %>%
   select(jahr, zeit)
 ```
 
-Histogramm Boxplot der Laufzeit je Geschlecht:
+Boxplot der Laufzeit je Geschlecht:
 
 ```{r}
 gf_boxplot(zeit ~ jahr, data = B2run_w) %>%
@@ -60,7 +60,7 @@ Was können Sie der Abbildung entnehmen?
 
 \newpage
 
-Analyse der Korrelation $$r_{x,y}=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}$$ der Laufteiten 2017 und 2018: Aktuell stehen die Werte untereinander (*long format*: eine Variable für das Jahr, eine andere für die Laufzeit), zur Berechnung der Korrelation müssen die Werte nebeneinander (*wide format*: eine Variable für die Lauzeit 2017, eine für die Laufzeit 2018) stehen.^[Nähere Informationen siehe [https://tidyr.tidyverse.org/articles/pivot.html](https://tidyr.tidyverse.org/articles/pivot.html)]
+Analyse der Korrelation $$r_{x,y}=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}$$ der Laufzeiten 2017 und 2018: Aktuell stehen die Werte untereinander (*long format*: eine Variable für das Jahr, eine andere für die Laufzeit), zur Berechnung der Korrelation müssen die Werte nebeneinander (*wide format*: eine Variable für die Lauzeit 2017, eine für die Laufzeit 2018) stehen.^[Nähere Informationen siehe [https://tidyr.tidyverse.org/articles/pivot.html](https://tidyr.tidyverse.org/articles/pivot.html)]
 
 Datenvorverarbeitung:
 
