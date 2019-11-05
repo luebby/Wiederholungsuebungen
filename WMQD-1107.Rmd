@@ -1,0 +1,82 @@
+---
+title: "Wiederholungsfragen 11.07.2019"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(mosaic)
+```
+
+Der Value-at-Risk (VaR) ist ein Risikomaß im Finanzsektor (z. B. Basel, Solvency II): Der Value-at-Risk zum Niveau $\alpha$ ist das $\alpha$ Quantil der Vermögensänderung. In der Regel wird der Verlust mit positiven Vorzeichen angegeben, d. h., mit einer Wahrscheinlichkeit von $1-\alpha$ ist der *Verlust* nicht größer. Unter der Annahme (!) einer unabhängig identischen Normalverteilung der Renditen mit einer (Tages-)Volatiltät $\sigma$ ergibt sich für ein Portfolio mit einem Wert $v$ und einer Haltedauer $T$ folgende Formel für den VaR:
+
+$$
+VaR^T_{1-\alpha} = v \cdot \sqrt{t} \cdot \sigma\cdot \Phi^{-1}(1-\alpha)
+$$
+
+Dabei ist $\Phi^{-1}(p)$ die Quantilsfunktion der Standardnormalverteilung, d.h., einer Normalverteilung mit den Parametern $\mu=0$ und $\sigma=1$. Dies entspricht der R Zuweisung:
+
+```{r, eval=FALSE}
+VaR <- v * sqrt(t) * sd * qnorm(1-alpha)
+```
+
+Bestimmen Sie für ein Portfolio des Wertes $500000$ mit einer Volatilität von $4\%$ den Value-at-Risk zum Niveau $1\%$ bei einer Haltedauer von 5 Tagen -- unter der Annahme einer unabhängigen, identischen Normalverteilung der Tagesrenditen.^[Da Sie in der Klausur keinen Zugang zu R haben ist dies keine Aufgabe für eine Klausur.]
+
+\vspace{2cm}
+
+Was passiert (ceteris paribus, d.h., unter sonst gleichen Umständen) mit dem Value-at-Risk, wenn die Haltedauer verkürzt wird?
+
+A.  Der Value-at-Risk ändert sich nicht.
+B.  Der Value-at-Risk wird größer.
+C.  Der Value-at-Risk wird kleiner.
+
+\vspace{2cm}
+
+Mit $\sigma=0.04$ und der Annahme einer unabhängigen, identischen Normalverteilung der Tagesrenditen ergibt sich für ein Portfolio mit dem Wert $v=500000$ ein $VaR^{5}_{1-5\%}=`r round(500000*sqrt(5)*0.04*qnorm(1-0.05),2)`$.
+
+Interpretieren Sie das Ergebnis.
+
+\newpage
+
+Bei einer Normalverteilung sind *extreme* Werte sehr selten, auf den Finanzmarkt kommen extreme Kursveränderungen aber häufiger vor als unter einer Normalverteilung zu erwarten wäre. Daher verwendet man häufig auch andere Verteilungen zur Modellierung, z. B. eine t-Verteilung^[Hier im Beispiel mit 3 Freiheitsgraden, engl: degrees of freedom, `df`].
+
+```{r, echo=FALSE, warning=FALSE}
+p1 <- gf_dist(dist="norm") %>%
+  gf_lims(x=c(-6,6)) %>%
+  gf_labs(title = "Dichtefunktion Standardnormalverteilung")
+p2 <- gf_dist(dist="t", df = 3) %>%
+  gf_lims(x=c(-6,6)) %>%
+  gf_labs(title = "Dichtefunktion t-Verteilung")
+gridExtra::grid.arrange(p1,p2, nrow=2)
+```
+
+Was passiert (ceteris paribus) mit dem Value-at-Risk, wenn statt einer Normalverteilung eine t-Verteilung verwendet wird?
+
+A.  Der Value-at-Risk ändert sich nicht.
+B.  Der Value-at-Risk wird größer.
+C.  Der Value-at-Risk wird kleiner.
+
+
+\newpage
+
+Benennen Sie die $6$ Phasen des quantitativen Forschungsprozesses.
+
+\vspace{2cm}
+
+Kann der gemessene Wert einer Eigenschaft ein anderes Skalenniveau als die Eigenschaft haben?
+
+-  Ja.
+-  Nein.
+
+\vspace{2cm}
+
+Welche Abbildung bietet sich an um die Verteilung der täglichen Rendite einer Aktie an den letzten 250 Handelstagen zu betrachten?
+
+A.  Säulendiagramm
+B.  Histogramm
+
+
+
+
