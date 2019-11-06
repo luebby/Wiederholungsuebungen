@@ -1,0 +1,151 @@
+---
+title: "Wiederholungsfragen 09.11.2019"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Die FOM Dortmund beteiligt sich seit mehreren Jahren am B2run Firmenlauf.
+```{r, message=FALSE}
+# Paket laden
+library(mosaic)
+# Daten in R einlesen
+B2run <- read.csv2("B2run.csv")
+# Datenstruktur
+str(B2run)
+# Ersten 6 Zeilen
+head(B2run)
+```
+
+Welches Skalenniveau hat die Laufzeit (`zeit`)?
+
+A.  Nominal
+B.  Ordinal
+C.  Intervallskaliert
+D.  Verhältnisskaliert
+
+\vspace{2cm}
+
+Handelt es sich bei den Beobachtungen um eine zufällige Stichprobe aller FOM Studierenden in Dortmund?
+
+A.  Ja
+B.  Nein
+
+
+
+\newpage
+
+Teildatensatz Frauen, Jahr 2019:
+
+```{r}
+B2run_w_2019 <- B2run %>%
+  filter(geschlecht == "w") %>%
+  filter(jahr == 2019) %>%
+  select(zeit)
+```
+
+Histogramm der Laufzeit:
+
+```{r}
+gf_histogram( ~ zeit, data = B2run_w_2019, binwidth = 5, center = 32.5) %>%
+  gf_rugx() %>%
+  gf_lims(x=c(15,55))
+```
+
+In welchem Bereich fallen die meisten Beobachtungen?
+
+A.  15-25 min.
+B.  25-35 min.
+C.  35-45 min.
+D.  45-55 min.
+
+\newpage
+
+Analyse der Korrelation $$r_{x,y}=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}$$ der Laufzeiten 2017 und 2018: Aktuell stehen die Werte untereinander (*long format*: eine Variable für das Jahr, eine andere für die Laufzeit), zur Berechnung der Korrelation müssen die Werte nebeneinander (*wide format*: eine Variable für die Lauzeit 2017, eine für die Laufzeit 2018) stehen.^[Nähere Informationen siehe [https://tidyr.tidyverse.org/articles/pivot.html](https://tidyr.tidyverse.org/articles/pivot.html)]
+
+Datenvorverarbeitung:
+
+```{r, message=FALSE}
+library(tidyr)   # Paket laden
+
+B2run_wide <-B2run %>%
+  pivot_wider(names_from = jahr, names_prefix = "zeit_",  # Namen der neuen Variablen
+              values_from = zeit) %>%                     # Werte der Variablen
+  select(person_id, geschlecht, zeit_2017, zeit_2018) %>%  # Relevante Variablen auswählen
+  na.omit()   # Beobachtungen mit fehlenden Werten löschen
+```
+
+Für den Korrelationskoeffizienten $r_{\texttt{zeit\_2017, zeit\_2018}}$ gilt dann:
+
+```{r}
+gf_point(zeit_2018 ~ zeit_2017, data = B2run_wide) %>%
+  gf_lm()
+cor(zeit_2018 ~ zeit_2017, data = B2run_wide)
+```
+
+\newpage
+
+Wie hoch ist der Korrelationskoeffizient  $r_{\texttt{zeit\_2018, zeit\_2017}}$ (`cor(zeit_2017 ~ zeit_2018, data = B2run_wide)`)?
+
+A.  $`r cor(zeit_2017 ~ zeit_2018, data = B2run_wide)`$
+B.  $`r (-1)* cor(zeit_2017 ~ zeit_2018, data = B2run_wide)`$ 
+C.  $\frac{1}{`r cor(zeit_2017 ~ zeit_2018, data = B2run_wide)`}$
+D.  Kann nicht gesagt werden
+
+\vspace{2cm}
+
+Eine lineare Regression der Laufzeit 2018 auf die von 2017 ergibt folgendes Ergebnis:
+
+```{r}
+erglm <- lm(zeit_2018 ~ zeit_2017, data = B2run_wide)
+summary(erglm)
+```
+
+Fassen Sie das Ergebnis der Analyse zusammen.
+
+\vspace{2cm}
+
+Analyse, ob sich die Person verbessert hat:
+
+```{r}
+B2run_wide <- B2run_wide %>%
+  mutate(verbessert = case_when(zeit_2018 < zeit_2017 ~ "Ja",
+                                zeit_2018 >= zeit_2017 ~ "Nein")) %>%
+  mutate(verbessert = factor(verbessert, levels = c("Nein", "Ja")))
+```
+
+Mit welchen Verfahren könnten Sie die Fragestellung untersuchen, inwieweit sich der Wert der Variable `verbessert` durch die Variable `geschlecht` in der Stichprobe modellieren lässt.
+
+A.  Lineare Regression
+B.  Logistische Regression
+
+\vspace{2cm}
+
+Eine Modellierung der Wahrscheinlichkeit von `verbessert == "Ja"` durch die Variable `geschlecht` ergibt in dieser Stichprobe folgendes Ergebnis
+
+```{r}
+ergglm <- glm(verbessert ~ geschlecht, data = B2run_wide, family = binomial)
+summary(ergglm)
+# Odds Ratio
+exp(coef(ergglm))
+```
+
+Welche Aussage stimmt?
+
+A.  Die Chance, dass es sich um eine Frau handelt liegt bei `r round(exp(coef(ergglm)), 2)[2]`
+B.  Die Chance, dass sich eine Frau verbessert liegt bei `r round(exp(coef(ergglm)), 2)[2]`
+C.  Die Chance, dass es eine Frau verbessert hat liegt bei `r round(exp(coef(ergglm)), 2)[2]` im Vergleich zu der eines Mannes.
+
+\vspace{2cm}
+
+Stimmt die Aussage: *Die Wahrscheinlichkeit, dass $\beta_1=0$ ist, liegt in diesem Modell bei `r round(summary(ergglm)$coefficients[2,4],4)`*?
+
+-  Ja.
+-  Nein.
+
+
