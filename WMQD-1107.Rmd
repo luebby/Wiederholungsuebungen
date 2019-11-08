@@ -13,13 +13,13 @@ library(mosaic)
 Der Value-at-Risk (VaR) ist ein Risikomaß im Finanzsektor (z. B. Basel, Solvency II): Der Value-at-Risk zum Niveau $\alpha$ ist das $\alpha$ Quantil der Vermögensänderung. In der Regel wird der Verlust mit positiven Vorzeichen angegeben, d. h., mit einer Wahrscheinlichkeit von $1-\alpha$ ist der *Verlust* nicht größer. Unter der Annahme (!) einer unabhängig identischen Normalverteilung der Renditen mit einer (Tages-)Volatiltät $\sigma$ ergibt sich für ein Portfolio mit einem Wert $v$ und einer Haltedauer $T$ folgende Formel für den VaR:
 
 $$
-VaR^T_{1-\alpha} = v \cdot \sqrt{t} \cdot \sigma\cdot \Phi^{-1}(1-\alpha)
+VaR^T_{1-\alpha} = v \cdot \sqrt{T} \cdot \sigma\cdot \Phi^{-1}(1-\alpha)
 $$
 
 Dabei ist $\Phi^{-1}(p)$ die Quantilsfunktion der Standardnormalverteilung, d.h., einer Normalverteilung mit den Parametern $\mu=0$ und $\sigma=1$. Dies entspricht der R Zuweisung:
 
 ```{r, eval=FALSE}
-VaR <- v * sqrt(t) * sd * qnorm(1-alpha)
+VaR <- v * sqrt(T) * s * qnorm(1-alpha)
 ```
 
 Bestimmen Sie für ein Portfolio des Wertes $500000$ mit einer Volatilität von $4\%$ den Value-at-Risk zum Niveau $1\%$ bei einer Haltedauer von 5 Tagen -- unter der Annahme einer unabhängigen, identischen Normalverteilung der Tagesrenditen.^[Da Sie in der Klausur keinen Zugang zu R haben ist dies keine Aufgabe für eine Klausur.]
