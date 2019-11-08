@@ -1,0 +1,134 @@
+---
+title: "Wiederholungsfragen 12.11.2019"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Gibt es einen Zusammenhang zwischen einer Einkommenskonzentration und dem Wirtschaftswachstum? Das [CIA World Factbook](https://www.cia.gov/library/publications/the-world-factbook/) stellt u.a. auch dazu Daten bereit:
+
+- Einkommenskonzentration: Diese wird z.B. durch den Gini Index gemessen. Dieser nimmt Werte zwischen $0$ und $1$ bzw. $0$ und $100$ an und steigt mit zunehmender Einkommenskonzentration, d.h. Ungleichheit. `family`. Quelle: [https://www.cia.gov/library/publications/resources/the-world-factbook/fields/223rank.html](https://www.cia.gov/library/publications/resources/the-world-factbook/fields/223rank.html)
+- Wirtschaftswachstum: Diese wird z.B. durch die jährliche Veränderung des Bruttoinlandsproduktes gemessen. `GDPgrowth`:[https://www.cia.gov/library/publications/resources/the-world-factbook/fields/210rank.html](https://www.cia.gov/library/publications/resources/the-world-factbook/fields/210rank.html)
+
+Über die Funktion `CIAdata()` aus dem Paket `mosaic` haben Sie auf diese Daten einen einfachen Zugang.
+
+Pakket laden:
+```{r, message=FALSE}
+library(mosaic)
+```
+
+Daten beschaffen:
+```{r, message=FALSE}
+My.Data <- CIAdata(c("family", "GDPgrowth"))
+```
+
+Daten kontrollieren:
+
+```{r}
+str(My.Data)
+head(My.Data)
+```
+
+\newpage
+
+Was sind in dieser Analyse die Untersuchungseinheiten?
+
+A.  Einwohner
+B.  Unternehmen
+C.  Länder
+
+\vspace{2cm}
+
+Misst das Bruttoinlandsprodukt die wirtschaftliche Zufriedenheit der Menschen?
+
+-  Ja
+-  Nein
+
+\vspace{2cm}
+
+Welches Skalenniveau hat die Variable `family`?
+
+-  kategorial - nominal
+-  kategorial - ordinal
+-  numerisch - intervallskaliert
+-  numerisch - verhältnisskaliert
+
+\newpage
+
+```{r}
+gf_point(GDPgrowth ~ family, data = My.Data)
+```
+
+Gibt es gemäß des Streudiagramms Ausreißer, d.h. Länder mit extremen Werten?
+
+-  Ja
+-  Nein
+
+\newpage
+
+Für die weitere Analyse werden die Länder als Ausreißer eleminiert, für die gilt, `family`$\leq 20$ und `GDPgrowth`$\geq 20$ oder `GDPgrowth`$\leq -10$: 
+```{r}
+My.Data.Clean <- My.Data %>%
+  filter(family > 20) %>%
+  filter(GDPgrowth < 20 & GDPgrowth > - 10)
+
+gf_point(GDPgrowth ~ family, data = My.Data.Clean)
+```
+
+\newpage
+
+Eine lineare Regression der Variable `GDPgrowth` auf `family` ergibt folgendes Ergebnis:
+
+```{r}
+erglm <- lm(GDPgrowth ~ family, data = My.Data.Clean)
+summary(erglm)
+```
+
+Für die Einkommenskonzentration von Deutschland und Schweden gilt:
+```{r}
+My.Data.Clean %>%
+  filter(country %in% c("Germany", "Sweden")) %>%
+  select(country, family)
+```
+
+
+Im geschätzten linearen Modell der Stichprobe: welches Land hat ein höheres wirtschaftliches Wachstum?
+
+A.  Deutschland
+B.  Schweden
+C.  Beide gleich
+
+\vspace{2cm}
+
+Muss dieses Ergebnis auch für die beobachteten Werte gelten?
+
+-  Ja
+-  Nein
+
+\newpage
+
+Wie viel \% der Variation des Wirtschaftswachstums kann durch die Einkommenskonzentration modelliert werden?
+
+A.  $\approx 1.4\%$
+B.  $\approx 14\%$
+C.  $\approx 4\%$
+D.  $\approx 40\%$
+E.  Kann mit der gegebenen Information nicht beantwortet werden.
+
+\vspace{2cm}
+
+Zeigt die Analyse: Eine höhere Einkommenskonzentration führt zu einem geringerem Wirtschaftswachstum?
+
+-  Ja
+-  Nein
+
+
+
+
+
+
