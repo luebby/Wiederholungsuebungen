@@ -122,10 +122,18 @@ E.  Kann mit der gegebenen Information nicht beantwortet werden.
 
 \vspace{2cm}
 
+Stimmt die Aussage: $r_{x,y} < 0 \Leftrightarrow \hat{\beta}_1< 0$, d.h. ein negativer Korrelationskoeffizient einer Stichprobe ist äquivalent zu einer negativen geschätzten Steigung in der Stichprobe?
+
+-  Ja
+-  Nein
+
+\vspace{2cm}
+
 Zeigt die Analyse: Eine höhere Einkommenskonzentration führt zu einem geringerem Wirtschaftswachstum?
 
 -  Ja
 -  Nein
+
 
 
 
