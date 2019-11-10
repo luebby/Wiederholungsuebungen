@@ -1,0 +1,87 @@
+---
+title: "Wiederholungsfragen 13.11.2019"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Welches Gütekritierium empirisches Forschung kann durch eine zufällige Zuordnung im Experiment positiv beeinflusst werden?
+
+A.  Interne Validität
+B.  Externe Validität
+
+\vspace{2cm}
+
+Die FOM Dortmund beteiligt sich seit mehreren Jahren am B2run Firmenlauf.
+```{r, message=FALSE}
+# Paket laden
+library(mosaic)
+# Daten in R einlesen
+B2run <- read.csv2("B2run.csv")
+# Datenstruktur
+str(B2run)
+# Ersten 6 Zeilen
+head(B2run)
+```
+
+Welches Skalenniveau hat die Laufzeit (`zeit`)?
+
+A.  Nominal
+B.  Ordinal
+C.  Intervallskaliert
+D.  Verhältnisskaliert
+
+\vspace{2cm}
+
+Handelt es sich bei den Beobachtungen um eine zufällige Stichprobe aller FOM Studierenden in Dortmund?
+
+A.  Ja
+B.  Nein
+
+
+
+\newpage
+
+Teildatensatz Frauen, Jahr 2019:
+
+```{r}
+B2run_w_2019 <- B2run %>%
+  filter(geschlecht == "w") %>%
+  filter(jahr == 2019) %>%
+  select(zeit)
+```
+
+Histogramm der Laufzeit:
+
+```{r}
+gf_histogram( ~ zeit, data = B2run_w_2019, binwidth = 5, center = 32.5) %>%
+  gf_rugx() %>%
+  gf_lims(x=c(15,55))
+```
+
+In welchem Bereich fallen die meisten Beobachtungen?
+
+A.  15-25 min.
+B.  25-35 min.
+C.  35-45 min.
+D.  45-55 min.
+
+\vspace{2cm}
+
+Welche Kennzahl beschreibt die Laufzeit einer typischen Läuferin besser?
+
+A.  Mittelwert (`mean`)
+B.  Median (`median`)
+
+\newpage
+
+```{r}
+favstats( ~ zeit, data = B2run_w_2019)
+```
+
+Interpretieren Sie die Kennzahl `Q1`=`r favstats(~zeit, data = B2run_w_2019)[2]`.
+
