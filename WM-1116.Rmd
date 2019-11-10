@@ -1,0 +1,92 @@
+---
+title: "Wiederholungsfragen 16.11.2019"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+Ist die Anzahl der Downloads einer Lernunterlage ein valides Messinstrument für die Güte der Vermittlung von Lerninhalten?
+
+- Ja
+- Nein
+
+\vspace{2cm}
+
+Welches Skalenniveau hat die Variable *Anzahl Downloads einer Lernunterlage*?
+
+A.  Kategorial – nominal
+B.  Kategorial – ordinal
+C.  Numerisch – intervallskaliert
+D.  Numerisch – verhältnisskaliert
+
+
+\vspace{2cm}
+
+Stimmt die Aussage: *kategoriale Variablen sind immer diskret*?
+
+- Ja
+- Nein
+
+
+\vspace{2cm}
+
+Eine Analystin ermittelt im Online-Campus die Anzahl der Downloads je Medium. Um welche Form der Datenerhebung handelt es sich?
+
+A.  Beobachtungsstudie
+B.  Experiment
+
+\vspace{2cm}
+
+Welche Variable ist hier inhaltlich die unabhängige Variable?
+
+A.	Medium 
+B.	Anzahl Downloads 
+
+\newpage
+
+Die Analystin stellt fest: *Videos werden häufiger heruntergeladen*. Ist hier eine Kausalaussage *Das Medium Video erhöht die Anzahl der Downloads* gerechtfertigt?
+
+-  Ja
+-  Nein
+
+\vspace{2cm}
+
+Die Analystin fragt im Freundeskreis (Facebook) 10000 Personen, welches Medium sie bevorzugen. Kann sie von ihrem Ergebnis direkt und unverzerrt auf die Population (alle Menschen) schließen?
+
+-  Ja
+-  Nein
+
+\vspace{2cm}
+
+Welches Gütekritierium empirisches Forschung kann durch eine zufällige Stichprobe positiv beeinflusst werden?
+
+A.  Interne Validität
+B.  Externe Validität
+
+\vspace{2cm}
+
+Die FOM Dortmund beteiligt sich seit mehreren Jahren am B2run Firmenlauf. ^[[https://www.b2run.de/run/de/de/infos/was-ist-b2run/index.html](https://www.b2run.de/run/de/de/infos/was-ist-b2run/index.html)]
+```{r, message=FALSE}
+# Paket laden
+library(mosaic)
+# Daten in R einlesen
+B2run <- read.csv2("B2run.csv")
+# Datenstruktur
+str(B2run)
+# Ersten 6 Zeilen
+head(B2run)
+```
+
+Was sind hier die Beobachtungseinheiten, d.h., auf welcher Ebene liegen die Daten vor?
+
+A.  Unternehmen
+B.  Jahr
+C.  Läufer\*in
+
+
