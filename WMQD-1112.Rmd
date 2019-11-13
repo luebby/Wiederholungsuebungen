@@ -17,6 +17,8 @@ Gibt es einen Zusammenhang zwischen einer Einkommenskonzentration und dem Wirtsc
 
 Über die Funktion `CIAdata()` aus dem Paket `mosaic` haben Sie auf diese Daten einen einfachen Zugang.
 
+**Hinweis**: Die Daten wurden teilweise zu unterschiedlichen Zeitpunkten erhoben (siehe die jeweiligen Links). Aufgrund der dadurch eingeschränkten *Datenqualität* ist die *Validität* der Ergebniss eingeschränkt. Für diese illustrative Analyse nehmen wir aus Gründen der Einfachheit an, dass die Variablen über die Jahre konstant geblíeben sind. Eine solche Limitation ist aber immer anzugeben und Daten und Annahmen sind kritisch zu hinterfragen.
+
 Pakket laden:
 ```{r, message=FALSE}
 library(mosaic)
