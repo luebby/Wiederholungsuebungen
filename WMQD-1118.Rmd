@@ -1,0 +1,89 @@
+---
+title: "Wiederholungsfragen 18.11.2019"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Womit hängt die (generelle Zufriedenheit) mit einem Freizeitpark zusammen?
+
+*Hinweis*: Das Beispiel orientiert sich an den Folienunterlagen von Chapman \& Feit zum Buch [*R for Marketing Research and Analytics*](http://r-marketing.r-forge.r-project.org/), Springer, 2015, siehe [http://r-marketing.r-forge.r-project.org/Instructor/slides-index.html](http://r-marketing.r-forge.r-project.org/Instructor/slides-index.html).
+
+Es handelt sich hier um *simulierte* Daten einer Kundenzufriedenheitsumfrage eines Freizeitparks:
+
+```{r, message=FALSE}
+# Paket laden
+library(mosaic)
+# Daten einlesen, "amerikanisches csv"
+Amusement <- read.csv("http://goo.gl/HKnl74")
+# Datenstruktur
+str(Amusement)
+# Erste Beobachtungen
+head(Amusement)
+```
+
+
+Handelt es sich bei einer Kundenzufriedenheitsumfrage um ein Experiment?
+
+- Ja
+- Nein
+
+\vspace{2cm}
+
+Wann können Sie das Ergebnis der Stichprobe unverzerrt generalisieren?
+
+A.  Wenn gleich viele zufriedene wie unzufriedene Besucher\*innen befragt wurden.
+B.  Wenn mindestens 1000 Besucher\*innen befragt wurden.
+C.  Wenn die Befragten zufällig aus allen Besucher\*innen ausgewählt wurden.
+
+
+\newpage
+
+Eine lineare Regression der generellen Zufriedenheit (`overall`) auf die Zufriedenheit mit den Fahrgeschäften (`rides`) und Wochenende (`weekend`) ergibt folgendes Ergebnis:
+
+```{r}
+erglm <- lm(overall ~ rides + weekend, data = Amusement)
+plotModel(erglm)
+summary(erglm)
+```
+
+
+\newpage 
+
+In Journals u.ä. wird dasselbe Ergebnis häufig so dargestellt:
+
+```{r, results='asis', message = FALSE}
+library(stargazer) # Ggf. vorher einmalig installieren
+stargazer(erglm, header = FALSE)
+```
+
+Fassen Sie das Ergebnis der Analyse zusammen. Wie lauten die Forschungsfrage, die Hypothesen und das vorläufige Ergebnis?
+
+\newpage 
+
+Die Geschäftsführung ist daran interessiert, inwieweit die Zufriedenheit mit der Sauberkeit (`clean`) und Wartezeit (`wait`) mit der Zufriedenheit insgesamt (`overall`) zusammenhängen. Als mögliche Kovariablen werden dabei die Anzahl Kinder (`num.child`) und die Entfernung zum Park (`distance`) kontrolliert.
+
+```{r, results='asis', message = FALSE}
+erglm.clean <-  lm(overall ~ clean + num.child + distance, data = Amusement)
+erglm.wait <-  lm(overall ~  wait + num.child + distance, data = Amusement)
+stargazer(erglm.clean, erglm.wait, header = FALSE)
+```
+
+In diesem (simulierten) Beispiel: welche Variable scheint stärker mit der Zufriedenheit insgesamt assoziiert zu sein:
+
+A.  Die Sauberkeit
+B.  Die Wartezeit
+
+\vspace{2cm}
+
+Kann rein aus dem Ergebnis einer Regression ein Kausalzusammenhang abgeleitet werden?
+
+A.  Ja
+B.  Ja, aber nur bei einem signifikanten Koeffizienten
+C.  Nein
+
