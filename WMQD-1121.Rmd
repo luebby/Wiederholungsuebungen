@@ -1,0 +1,137 @@
+---
+title: "Wiederholungsfragen 21.11.2019"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Preismodellierung von Diamanten
+
+```{r, message=FALSE}
+# Paket laden
+library(mosaic)
+# Daten einlesen
+data(diamonds)
+# Datenstruktur
+str(diamonds)
+# Erste Beobachtungen
+head(diamonds)
+```
+
+Für uns relevant: `carat`, `color` und `price`, wobei wir nur die Diamanten mit der besten Farbe (`D`) und der schlechtesten (`J`) auswählen werden.
+
+Was wird für diesen Analysedatensatz gelten?
+
+A.  $n<`r nrow(diamonds)`$
+B.  $n>`r nrow(diamonds)`$
+C.  $n=`r nrow(diamonds)`$
+D.  Die Relation $n$ zu $`r nrow(diamonds)`$ kann nicht angegeben werden.
+
+\newpage
+
+Datenvorerarbeitung: relevante Beobachtungen (`filter()`, hier: `|` entspricht einem logischem *oder* ($\vee$)) und Variablen (`select()`) auswählen, Farbcode *übersetzen* (`mutate()`, bedingt `case_when()`):
+
+```{r}
+my.diamonds <- diamonds %>%
+  filter(color == "D" | color == "J") %>%
+  select(color, carat, price) %>%
+  mutate(color = case_when(color == "D" ~ "best",
+                           color == "J" ~ "worst"))
+```
+
+Viele Zusammenhänge sind nicht linear, daher werden hier verschiedene Zusammenhänge^[Häufig auch Logarithmus, `log()`.] betrachtet:^[Über die Funktion `gridarrange()` aus dem Paket `gridExtra` können Abbildungen *arrangiert* werden.]
+
+```{r, message=FALSE}
+p1 <- gf_point(price ~ carat, color = ~ color, data = my.diamonds) %>%
+  gf_labs(title = "Ohne Transformation des Preises")
+p2 <- gf_point(sqrt(price) ~ carat, color = ~ color, data = my.diamonds) %>%
+  gf_labs(title = "Wurzeltransformation des Preises")
+library(gridExtra)
+grid.arrange(p1, p2, nrow = 2, ncol = 1)
+```
+
+Welches Modell scheint angemessener zu sein?
+
+A.  $\text{price}_i=\beta_0 + \beta_1\cdot \text{carat}_i+\beta_2\cdot \text{color}_i+\epsilon_i$
+B.  $\sqrt{\text{price}}_i=\beta_0 + \beta_1\cdot \text{carat}_i+\beta_2\cdot \text{color}_i+\epsilon_i$
+
+\newpage
+
+Eine Lineare Regression der Quadratwurzel des Preises auf Karat und Farbe ergibt folgendes Ergebnis:
+
+```{r}
+my.diamonds <- my.diamonds %>%
+  mutate(sqrt.price = sqrt(price))
+
+erglm <- lm(sqrt.price ~ carat + color, data = my.diamonds)
+summary(erglm)
+```
+
+Stimmt die Aussage: *Mehr als die Hälfte der Variation des Preises kann hier modelliert werden*?
+
+- Ja
+- Nein
+
+\vspace{2cm}
+
+Stimmt die Aussage: *Der Median des modellierten Preises liegt bei `r round(median( ~ resid(erglm)),2)`*?
+
+- Ja
+- Nein
+
+
+\newpage
+
+Der geschätzte Koeffizient $\hat{\beta}_1=`r round(coef(erglm)[2],2)`$ ist das Ergebnis *dieser* Stichprobe: eine andere Stichrprobe hätte evtl. ein anderes Ergebnis ergeben. Diese Unsicherheit kann über Bootstrapping simuliert werden:
+
+```{r, out.width="60%", fig.align="center"}
+set.seed(1896)
+
+Bootvtlg <- do(1000) * lm(sqrt.price ~ carat + color, data = resample(my.diamonds))
+
+gf_histogram( ~ carat, data = Bootvtlg) 
+quantile( ~ carat, probs = c(0.025, 0.975), data = Bootvtlg)
+```
+
+```{r}
+qlm <- quantile( ~ carat, probs = 0.25, data = Bootvtlg)
+```
+
+Stimmt die Aussage: *Auch ein Wert von ${\beta}_1=`r round(qlm,2)`$ wäre mit den Daten kompatibel*?
+
+- Ja
+- Nein
+
+\newpage
+
+Welche Aussage stimmt, wenn man annimmt, dass es theoretisch keinen Zusammenhang zwischen Farbe und Preis gibt?
+
+
+A.  $\hat{\beta}_2=0$
+B.  $\hat{\beta}_2 \neq 0$
+C.  ${\beta}_2 = 0$
+D.  ${\beta}_2 \neq 0$
+
+\vspace{2cm}
+
+Simulation der Verteilung *wenn es keinen Zusammenhang* zwischen Farbe und Preis gäbe:
+
+```{r, out.width="60%", fig.align="center"}
+set.seed(1896)
+
+Nullvtlg <- do(1000) * lm(sqrt.price ~ carat + shuffle(color), data = my.diamonds)
+
+gf_histogram( ~ colorworst, data = Nullvtlg)
+quantile( ~ colorworst, probs = c(0.025, 0.975), data = Nullvtlg)
+```
+
+Stimmt die Aussage: *Die geschätzte Veränderung von $\hat{\beta}_2=`r round(coef(erglm)[3],2)`$ ist mit Modell "kein Zusammehang" kompatibel*?
+
+- Ja
+- Nein
+
+

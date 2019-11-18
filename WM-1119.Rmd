@@ -1,0 +1,99 @@
+---
+title: "Wiederholungsfragen 19.11.2019"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Welches Gütekritierium empirisches Forschung kann durch eine zufällige Zuordnung im Experiment positiv beeinflusst werden?
+
+A.  Interne Validität
+B.  Externe Validität
+
+\vspace{2cm}
+
+Die FOM Dortmund beteiligt sich seit mehreren Jahren am B2run Firmenlauf.
+```{r, message=FALSE}
+# Paket laden
+library(mosaic)
+# Daten in R einlesen
+B2run <- read.csv2("B2run.csv")
+# Datenstruktur
+str(B2run)
+# Ersten 6 Zeilen
+head(B2run)
+```
+
+
+Handelt es sich bei den Beobachtungen um eine zufällige Stichprobe aller FOM Studierenden in Dortmund?
+
+A.  Ja
+B.  Nein
+
+\newpage
+
+```{r}
+mosaicplot(jahr ~ geschlecht, data = B2run, color = TRUE)
+```
+
+Was können Sie dem Mosaikplot entnehmen?
+
+\newpage
+
+Teildatensatz der Frauen, `jahr` als kategoriale Variable definieren:
+
+```{r}
+B2run_w <- B2run %>%
+  filter(geschlecht == "w") %>%
+  mutate(jahr = factor(jahr)) %>%
+  select(jahr, zeit)
+```
+
+Kennzahlen der Laufzeit je Geschlecht:
+
+```{r}
+favstats(zeit ~ jahr, data = B2run_w)
+```
+
+
+Welche Kennzahl beschreibt die Laufzeit einer typischen Läuferin besser?
+
+A.  Mittelwert (`mean`)
+B.  Median (`median`)
+
+\newpage
+
+Analyse der Korrelation $$r_{x,y}=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}$$ der Laufzeiten 2017 und 2018: Aktuell stehen die Werte untereinander (*long format*: eine Variable für das Jahr, eine andere für die Laufzeit), zur Berechnung der Korrelation müssen die Werte nebeneinander (*wide format*: eine Variable für die Lauzeit 2017, eine für die Laufzeit 2018) stehen.^[Nähere Informationen siehe [https://tidyr.tidyverse.org/articles/pivot.html](https://tidyr.tidyverse.org/articles/pivot.html)]
+
+Datenvorverarbeitung:
+
+```{r, message=FALSE}
+library(tidyr)   # Paket laden
+
+B2run_wide <-B2run %>%
+  pivot_wider(id_cols = person_id,                        # ID Variable 
+              names_from = jahr, names_prefix = "zeit_",  # Namen der neuen Variablen
+              values_from = zeit) %>%                     # Werte der Variablen
+  select(person_id, zeit_2017, zeit_2018) %>%  # Relevante Variablen auswählen
+  na.omit()   # Beobachtungen mit fehlenden Werten löschen
+```
+
+Für den Korrelationskoeffizienten $r_{\texttt{zeit\_2017, zeit\_2018}}$ gilt dann:
+
+```{r}
+gf_point(zeit_2018 ~ zeit_2017, data = B2run_wide)
+cor(zeit_2018 ~ zeit_2017, data = B2run_wide)
+```
+
+\newpage
+
+Wie hoch ist der Korrelationskoeffizient  $r_{\texttt{zeit\_2018, zeit\_2017}}$ (`cor(zeit_2017 ~ zeit_2018, data = B2run_wide)`)?
+
+A.  $`r cor(zeit_2017 ~ zeit_2018, data = B2run_wide)`$
+B.  $`r (-1)* cor(zeit_2017 ~ zeit_2018, data = B2run_wide)`$ 
+C.  $\frac{1}{`r cor(zeit_2017 ~ zeit_2018, data = B2run_wide)`}$
+D.  Kann nicht gesagt werden
