@@ -9,7 +9,7 @@ classoption: a4paper, 14pt
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Preismodellierung von Diamanten
+Wie kann der Preis eines Diamanten modelliert werden?
 
 ```{r, message=FALSE}
 # Paket laden
@@ -22,7 +22,7 @@ str(diamonds)
 head(diamonds)
 ```
 
-Für uns relevant: `carat`, `color` und `price`, wobei wir nur die Diamanten mit der besten Farbe (`D`) und der schlechtesten (`J`) auswählen werden.
+Für uns relevant: `carat`, `color` und `price`, wobei wir nur die Diamanten mit der besten Farbe (`D`) und der schlechtesten (`J`) und mit maximal 2 Karat auswählen werden.
 
 Was wird für diesen Analysedatensatz gelten?
 
@@ -38,6 +38,7 @@ Datenvorerarbeitung: relevante Beobachtungen (`filter()`, hier: `|` entspricht e
 ```{r}
 my.diamonds <- diamonds %>%
   filter(color == "D" | color == "J") %>%
+  filter(carat <= 2) %>%
   select(color, carat, price) %>%
   mutate(color = case_when(color == "D" ~ "best",
                            color == "J" ~ "worst"))
@@ -51,7 +52,7 @@ p1 <- gf_point(price ~ carat, color = ~ color, data = my.diamonds) %>%
 p2 <- gf_point(sqrt(price) ~ carat, color = ~ color, data = my.diamonds) %>%
   gf_labs(title = "Wurzeltransformation des Preises")
 library(gridExtra)
-grid.arrange(p1, p2, nrow = 2, ncol = 1)
+grid.arrange(p1, p2, nrow = 1, ncol = 2)
 ```
 
 Welches Modell scheint angemessener zu sein?
@@ -61,7 +62,7 @@ B.  $\sqrt{\text{price}}_i=\beta_0 + \beta_1\cdot \text{carat}_i+\beta_2\cdot \t
 
 \newpage
 
-Eine Lineare Regression der Quadratwurzel des Preises auf Karat und Farbe ergibt folgendes Ergebnis:
+Eine Lineare Regression der Quadratwurzel des Preises^[Bei Prognose (oder Interpretation): Rücktransformation nicht vergessen. Eine *andere* Alternative wäre das Modell: $\text{price}_i=\beta_0 + \beta_1\cdot \text{carat}^2_i+\beta_2\cdot \text{color}_i+\epsilon_i$] auf Karat und Farbe ergibt folgendes Ergebnis:
 
 ```{r}
 my.diamonds <- my.diamonds %>%
@@ -97,7 +98,7 @@ gf_histogram( ~ carat, data = Bootvtlg)
 quantile( ~ carat, probs = c(0.025, 0.975), data = Bootvtlg)
 ```
 
-```{r}
+```{r, include=FALSE}
 qlm <- quantile( ~ carat, probs = 0.25, data = Bootvtlg)
 ```
 
@@ -108,7 +109,7 @@ Stimmt die Aussage: *Auch ein Wert von ${\beta}_1=`r round(qlm,2)`$ wäre mit de
 
 \newpage
 
-Welche Aussage stimmt, wenn man annimmt, dass es theoretisch keinen Zusammenhang zwischen Farbe und Preis gibt?
+Welche Aussage stimmt, wenn man annimmt, dass es theoretisch keinen Zusammenhang zwischen Farbe und Quadratwurzel des Preises gibt?
 
 
 A.  $\hat{\beta}_2=0$
@@ -118,7 +119,7 @@ D.  ${\beta}_2 \neq 0$
 
 \vspace{2cm}
 
-Simulation der Verteilung *wenn es keinen Zusammenhang* zwischen Farbe und Preis gäbe:
+Simulation der Verteilung *wenn es keinen Zusammenhang* zwischen Farbe und Quadratwurzel des Preises gäbe:
 
 ```{r, out.width="60%", fig.align="center"}
 set.seed(1896)
