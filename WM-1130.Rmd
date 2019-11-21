@@ -1,0 +1,101 @@
+---
+title: "Wiederholungsfragen 30.11.2019"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+library(nycflights13)
+library(mosaic)
+
+set.seed(1896)
+Flights <- flights %>%
+  select(month, origin, dep_delay, distance) %>%
+  na.omit() %>%
+  sample_n(size = 1000) %>%
+  mutate(verspaetet = factor(case_when(dep_delay > 0 ~ "ja",
+                                       dep_delay <=0 ~ "nein"), levels = c("nein", "ja"))) %>%
+  mutate(jahreszeit = factor(case_when(month %in% c(1,2,12) ~ "Winter",
+                                       month %in% c(3,4,5) ~ "Frühling",
+                                       month %in% c(6,7,8) ~ "Sommer",
+                                       month %in% c(9,10,11) ~ "Herbst"))) %>%
+  mutate(entfernung=round(distance/1.609344)) %>%
+  mutate(flughafen = as.factor(origin)) %>%
+  select(flughafen, jahreszeit, entfernung, verspaetet)
+```
+
+
+
+Können Verspätungen modelliert werden?
+
+Es liegt ein zufällige Stichprobe von Abflugdaten von drei New Yorker Flughäfen des Jahres 2013 vor. Neben der Information ob der Abflug verspätet erfolgte liegt noch die meterologische Jahrezeit und die Flugdistanz vor.
+
+
+```{r, message=FALSE}
+# Paket laden
+library(mosaic)
+# Datenstruktur
+str(Flights)
+# Erste Beobachtungen
+head(Flights)
+```
+
+
+Kann das Ergebnis auf alle Flüge der drei New Yorker Flughäfen des Jahres 2013 verallgemeinert werden?
+
+- Ja
+- Nein
+- Mit der gegebenen Information nicht entscheidbar.
+
+\newpage
+
+Ein logistische Regression des Ergebnisses `verspaetet == "ja"` ergibt folgendes Ergebnis:
+
+```{r}
+ergglm <- glm(verspaetet ~ flughafen + jahreszeit + entfernung, data = Flights, 
+              family = binomial())
+summary(ergglm)
+```
+
+Welcher Flughafen hat die geringste Verspätungswahrscheinlichkeit?
+
+A.  John F. Kennedy International Airport (`JFK`)
+B.  Newark Liberty International Airport (`EWR`)
+C.  Fiorello LaGuardia Airport (`LGA`)
+
+\vspace{2cm}
+
+Stimmt die Aussage: *Die Wahrscheinlichkeit einer Verspätung im Sommer liegt bei `r round(coef(ergglm)[5],2)`*?
+
+- Ja
+- Nein
+
+\newpage
+
+Was würde gelten, wenn *theoretisch* im Modell der Verspätungswahrscheinlichkeit kein Zusammenhang mit der Entfernung bestehen würde?
+
+A.  $\beta_{\text{entfernung}}=0$
+B.  $\hat{\beta}_{\text{entfernung}}=0$
+
+\vspace{2cm}
+
+
+Simulation des Modells, in dem es keinen Zusammenhang zwischen der Entfernung und der Verspätungswahrscheinlichkeit gibt:
+
+```{r}
+set.seed(1896) 
+Nullvtlg <- do(1000) * glm(verspaetet ~ flughafen + jahreszeit + shuffle(entfernung), 
+                           data = Flights, family = binomial())
+gf_histogram(~ entfernung, data = Nullvtlg)
+quantile(~ entfernung, data = Nullvtlg, probs = c(0.025, 0.975))
+```
+
+Stimmt die Aussage: *Der in der Stichprobe beobachtete Wert von $\hat{\beta}_{\text{entfernung}}=`r round(coef(ergglm)[7],6)`$ ist mit dem Modell "kein Zusammenhang" (noch) kompatibel*?
+
+- Ja
+- Nein
