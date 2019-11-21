@@ -1,0 +1,86 @@
+---
+title: "Wiederholungsfragen 25.11.2019"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Die FOM Dortmund beteiligt sich seit mehreren Jahren am B2run Firmenlauf.
+```{r, message=FALSE}
+# Paket laden
+library(mosaic)
+# Daten in R einlesen
+B2run <- read.csv2("B2run.csv")
+# Datenstruktur
+str(B2run)
+# Ersten 6 Zeilen
+head(B2run)
+```
+
+Teildatensatz Frauen, Jahr 2019:
+
+```{r}
+B2run_w_2019 <- B2run %>%
+  filter(geschlecht == "w") %>%
+  filter(jahr == 2019) %>%
+  select(zeit)
+```
+
+
+\newpage
+
+Analyse der Korrelation der Laufzeiten 2017 und 2018: Aktuell stehen die Werte untereinander (*long format*: eine Variable für das Jahr, eine andere für die Laufzeit), zur Berechnung der Korrelation müssen die Werte nebeneinander (*wide format*: eine Variable für die Lauzeit 2017, eine für die Laufzeit 2018) stehen.^[Nähere Informationen siehe [https://tidyr.tidyverse.org/articles/pivot.html](https://tidyr.tidyverse.org/articles/pivot.html)]
+
+Datenvorverarbeitung:
+
+```{r, message=FALSE}
+library(tidyr)   # Paket laden
+
+B2run_wide <-B2run %>%
+  pivot_wider(id_cols = person_id,                        # ID Variable 
+              names_from = jahr, names_prefix = "zeit_",  # Namen der neuen Variablen
+              values_from = zeit) %>%                     # Werte der Variablen
+  select(person_id, zeit_2017, zeit_2018) %>%  # Relevante Variablen auswählen
+  na.omit()   # Beobachtungen mit fehlenden Werten löschen
+```
+
+Für den Korrelationskoeffizienten $r_{\texttt{zeit\_2017, zeit\_2018}}$ gilt dann:
+
+```{r}
+gf_point(zeit_2018 ~ zeit_2017, data = B2run_wide) %>%
+  gf_lm()
+cor(zeit_2018 ~ zeit_2017, data = B2run_wide)
+```
+
+\newpage
+
+Wie hoch ist der Korrelationskoeffizient  $r_{\texttt{zeit\_2018, zeit\_2017}}$ (`cor(zeit_2017 ~ zeit_2018, data = B2run_wide)`)?
+
+A.  $`r cor(zeit_2017 ~ zeit_2018, data = B2run_wide)`$
+B.  $`r (-1)* cor(zeit_2017 ~ zeit_2018, data = B2run_wide)`$ 
+C.  $\frac{1}{`r cor(zeit_2017 ~ zeit_2018, data = B2run_wide)`}$
+D.  Kann nicht gesagt werden
+
+\vspace{2cm}
+
+Stimmt die Aussage: $r_{x,y} < 0 \Leftrightarrow \hat{\beta}_1< 0$, d.h. ein negativer Korrelationskoeffizient einer Stichprobe ist äquivalent zu einer negativen geschätzten Steigung in der Stichprobe?
+
+-  Ja
+-  Nein
+
+\vspace{2cm}
+
+Eine lineare Regression der Laufzeit 2018 auf die von 2017 ergibt folgendes Ergebnis:
+
+```{r}
+erglm <- lm(zeit_2018 ~ zeit_2017, data = B2run_wide)
+summary(erglm)
+```
+
+Fassen Sie das Ergebnis der Analyse zusammen.
+
