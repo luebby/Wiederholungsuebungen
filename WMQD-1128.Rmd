@@ -1,0 +1,117 @@
+---
+title: "Wiederholungsfragen 28.11.2019"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE, message=FALSE}
+# install.packages("Sleuth3")
+data("case0101", package = "Sleuth3")
+Motivation <- case0101
+library(mosaic)
+
+Extrinsic <- Motivation %>%
+  filter(Treatment == "Extrinsic")
+```
+
+Im Paper Amabile, T. M. (1985). *Motivation and creativity: Effects of motivational orientation on creative writers*. Journal of personality and social psychology, 48(2), 393, wird ein Kreativitässcore (`Score`)  und die Motivation (`Treatment`, extrinsisch (`Extrinsic`) bzw. intrinsisch (`Intrinsic`)) analysiert. Dabei erhielten die Teilnehmeden vor der Kreativitätsmessung zufällig zugeordnet einen Fragebogen, der die jeweilige Motivation fokussierte. 
+
+\vspace{2cm}
+
+Vor der Behandlung, d.h. der zufälligen Zuordnung zu den beiden Gruppen, extrinsischer oder intrinsicher Motivation, wurde ein Vorab-Kreativitätsscore ermittelt. Welche Aussage stimmt:
+
+A.  Es gibt Grund zur Annahme, dass die Kreativität in beiden Gruppen annährend identisch verteilt ist.
+B.  Es gibt keinen Grund zur Annahme, dass die Kreativität in beiden Gruppen annährend identisch verteilt ist.
+
+\vspace{2cm}
+
+Für die Verteilung des Kreativitässcores (nach der Behandlung) ergibt sich für die extrinsisch motivierten folgendes Bild:
+
+```{r, fig.align="center", out.width="60%"}
+gf_histogram( ~ Score, data = Extrinsic,
+              binwidth = 3, center = 1.5) %>%
+  gf_lims(x=c(0,30))
+```
+
+
+Stimmt die Aussage: *Der Kreativitässcore ist hier näherungsweise normalverteilt*?
+
+- Ja
+- Nein
+
+\newpage
+
+Der Mittelwert der Stichprobe, $\bar{x}$ liegt bei `r round(mean( ~ Score, data = Extrinsic),1)` bei einer Standardabweichung $sd$ von `r round(sd( ~ Score, data = Extrinsic),1)`.
+
+Um ein Konfidenzintervall zu bestimmen werden die Daten resampled:
+
+```{r, fig.align="center", out.width="60%"}
+set.seed(1896)
+# Bootstrapping
+Bootvtlg <- do(1000) * mean(~ Score, data = resample(Extrinsic))
+# Bootstrap-Verteilung
+gf_histogram( ~ mean, data = Bootvtlg)
+# 95%-Konfidenzintervall
+quantile( ~ mean, data = Bootvtlg, probs=c(0.025,0.975))
+```
+
+```{r, include=FALSE}
+ki<-quantile( ~ mean, data = Bootvtlg, probs=c(0.025,0.975))
+```
+
+Stimmt die Aussage: *Der Mittelwert des Kreativitässcores ist hier näherungsweise normalverteilt*?
+
+- Ja
+- Nein
+
+\vspace{2cm}
+
+Stimmt die Aussage: *95\% der Teilnehmenden erreichen einen Kreativitätsscore zwischen `r floor(ki[1]*10)/10` und `r ceiling(ki[2]*10)/10`*?
+
+- Ja
+- Nein
+
+\newpage
+
+Stimmt die Aussage: *Unter sonst gleichen Umständen fällt der Standardfehler $se$ mit steigender Anzahl $n$ an Beobachtungen.
+
+A.  Ja
+B.  Nein
+C.  Evtl., hängt von der Standardabweichung ab.
+D.  Evtl., hängt von der Varianz ab.
+
+\vspace{2cm}
+
+Angenommen jemand, der überhaupt keine Ahnung von Standardfehler, Standardabweichung usw. hat hätte an der vorigen Frage teilgenommen. Mit welcher Wahrscheinlichkeit hätte er/sie richtig geraten?
+
+A.  $\pi=1/2$
+B.  $\pi=1/4$
+
+\vspace{2cm}
+
+Was meinen Sie: Ist das Ergebnis auf die vorletzte Frage gut durch das Modell *alle raten* erklärbar?
+
+A.  Ja
+B.  Nein
+C.  Vielleicht
+
+\vspace{2cm}
+
+Na dann, dann wollen wir das Modell *alle raten* mal simulieren:
+
+```{r, eval=FALSE}
+# Für die Reproduzierbarkeit des Zufalls:
+set.seed(1896)
+Nullvtlg <- do(1000) * rflip(n = ___, prob = ___)
+gf_bar( ~ heads, data = Nullvtlg)
+```
+
+
+
+
+
