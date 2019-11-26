@@ -72,7 +72,7 @@ erglm <- lm(sqrt.price ~ carat + color, data = my.diamonds)
 summary(erglm)
 ```
 
-Stimmt die Aussage: *Mehr als die Hälfte der Variation des Preises kann hier modelliert werden*?
+Stimmt die Aussage: *Mehr als die Hälfte der Variation Quadratwurzel des Preises kann hier modelliert werden*?
 
 - Ja
 - Nein

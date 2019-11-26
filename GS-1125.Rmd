@@ -22,17 +22,6 @@ str(B2run)
 head(B2run)
 ```
 
-Teildatensatz Frauen, Jahr 2019:
-
-```{r}
-B2run_w_2019 <- B2run %>%
-  filter(geschlecht == "w") %>%
-  filter(jahr == 2019) %>%
-  select(zeit)
-```
-
-
-\newpage
 
 Analyse der Korrelation der Laufzeiten 2017 und 2018: Aktuell stehen die Werte untereinander (*long format*: eine Variable für das Jahr, eine andere für die Laufzeit), zur Berechnung der Korrelation müssen die Werte nebeneinander (*wide format*: eine Variable für die Lauzeit 2017, eine für die Laufzeit 2018) stehen.^[Nähere Informationen siehe [https://tidyr.tidyverse.org/articles/pivot.html](https://tidyr.tidyverse.org/articles/pivot.html)]
 
@@ -49,6 +38,8 @@ B2run_wide <-B2run %>%
   na.omit()   # Beobachtungen mit fehlenden Werten löschen
 ```
 
+\newpage
+
 Für den Korrelationskoeffizienten $r_{\texttt{zeit\_2017, zeit\_2018}}$ gilt dann:
 
 ```{r}
@@ -57,7 +48,6 @@ gf_point(zeit_2018 ~ zeit_2017, data = B2run_wide) %>%
 cor(zeit_2018 ~ zeit_2017, data = B2run_wide)
 ```
 
-\newpage
 
 Wie hoch ist der Korrelationskoeffizient  $r_{\texttt{zeit\_2018, zeit\_2017}}$ (`cor(zeit_2017 ~ zeit_2018, data = B2run_wide)`)?
 
