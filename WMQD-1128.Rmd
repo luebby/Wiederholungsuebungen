@@ -78,7 +78,7 @@ Stimmt die Aussage: *95\% der Teilnehmenden erreichen einen Kreativitätsscore z
 
 \newpage
 
-Stimmt die Aussage: *Unter sonst gleichen Umständen fällt der Standardfehler $se$ mit steigender Anzahl $n$ an Beobachtungen.
+Stimmt die Aussage: *Unter sonst gleichen Umständen fällt der Standardfehler $se$ mit steigender Anzahl $n$ an Beobachtungen*?
 
 A.  Ja
 B.  Nein
