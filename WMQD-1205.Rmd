@@ -1,0 +1,73 @@
+---
+title: "Wiederholungsfragen 05.12.2019"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE, message=FALSE}
+# install.packages("Sleuth3")
+data("case0101", package = "Sleuth3")
+Motivation <- case0101
+```
+
+Zur Erhebung eines Mietpreisspiegels ziehen Chiara und Alexander aus derselben Population jeweils eine zufällige Stichprobe und berechnen ein $95\%$-Konfidenzintervall für die mittlere Miete $\mu$. Das von Chiara geht von $UG_{\text{Chiara}}$ bis $OG_{\text{Chiara}}$, das von Alexander von $UG_{\text{Alexander}}$ bis $OG_{\text{Alexander}}$ ($UG$: Untere Grenze, $OG$: Obere Grenze.)
+
+Werden beide auf dasselbe Konfidenzintervall kommen, d.h. $UG_{\text{Chiara}}=UG_{\text{Alexander}}$ und $OG_{\text{Chiara}}=OG_{\text{Alexander}}$?
+
+A.  Ja
+B.  Nein
+C.  Wenn $n_{\text{Chiara}}=n_{\text{Alexander}}$ ja, sonst nein.
+
+\vspace{2cm}
+
+Angenommen der es gilt $n_{\text{Chiara}}>n_{\text{Alexander}}$. Was gilt dann?
+
+A.  Chiara hat eine höhere Wahrscheinlichkeit für einen Fehler 2. Art.
+B.  Alexander hat eine höhere Wahrscheinlichkeit für einen Fehler 2. Art.
+C.  Beide haben eine gleich hohe Wahrscheinlichkeit für einen Fehler 2. Art.
+
+\vspace{2cm}
+
+Im Paper Amabile, T. M. (1985). *Motivation and creativity: Effects of motivational orientation on creative writers*. Journal of personality and social psychology, 48(2), 393, wird ein Kreativitässcore (`Score`)  und die Motivation (`Treatment`, extrinsisch (`Extrinsic`) bzw. intrinsisch (`Intrinsic`)) analysiert. Dabei erhielten die Teilnehmeden vor der Kreativitätsmessung zufällig zugeordnet einen Fragebogen, der die jeweilige Motivation fokussierte. 
+
+```{r, message=FALSE}
+library(mosaic)
+str(Motivation)
+head(Motivation)
+```
+
+\newpage
+
+Vergleich Kreativitätsscore mit intrinsicher und extrinsischer Motivation:
+
+```{r}
+# Mittelwerte 
+mean(Score ~ Treatment, data = Motivation)
+```
+
+```{r}
+# Differenz der Mittelwerte
+diff.stipro <- diffmean(Score ~ Treatment, data = Motivation)
+diff.stipro
+```
+
+
+```{r, out.width="80%", fig.align="center"}
+# Simulation unter H_0
+Nullvtlg <- do(10000) * diffmean(Score ~ shuffle(Treatment), data = Motivation) 
+# Permutationsverteilung
+gf_histogram( ~ diffmean, data = Nullvtlg, center = 0, bins = 21) %>%
+  gf_vline(xintercept = ~ diff.stipro)
+# p-Wert
+prop( ~ abs(diffmean) >= abs(diff.stipro), data = Nullvtlg)
+```
+
+Fassen Sie das Ergebnis der Analyse zusammen. Wie lauten die Forschungsfrage, die Hypothesen und das vorläufige Ergebnis?
+
+
+
