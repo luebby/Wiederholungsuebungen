@@ -48,9 +48,9 @@ head(Flights)
 
 Kann das Ergebnis auf alle Flüge der drei New Yorker Flughäfen des Jahres 2013 verallgemeinert werden?
 
-- Ja
-- Nein
-- Mit der gegebenen Information nicht entscheidbar.
+A.  Ja
+B.  Nein
+C.  Mit der gegebenen Information nicht entscheidbar.
 
 \newpage
 
