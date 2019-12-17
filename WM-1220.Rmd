@@ -1,0 +1,130 @@
+---
+title: "Einstiegs- und Wiederholungsfragen 29.12.2019"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Im Paper Harrison, D. and Rubinfeld, D.L. (1978) *Hedonic prices and the demand for clean air*. J. Environ. Economics and Management 5, 81–102, wird ein Datensatz analysiert, der u.a. auch die Frage nach dem Preis eines Hauses enthält. 
+
+Dieser Datensatz ist in R im Paket `MASS` enthalten. Für eine Variablenbeschreibung siehe `?MASS::Boston`
+
+```{r, message=FALSE}
+library(mosaic)
+data("Boston", package = "MASS")
+str(Boston)
+head(Boston)
+```
+
+Es soll als Zielvariable $y$ `medv` modelliert werden.
+
+\newpage
+
+Simulation Vorhersage: zufällige Aufteilung der Beobachtungen ausgewählter Variablen des Datensatzes in Training (ca. $2/3$) und Test (ca. $1/3$). Entwickelt wird das Modell für `medv` auf Basis des Trainingsdatensatzes, die Vorhersage wird evaluiert auf den Testdatensatz.
+
+```{r}
+set.seed(1896)
+Boston <- Boston %>%
+  select(medv, age, chas, indus, lstat, rm) %>%
+  mutate(rolle = sample(c("Training", "Test"), 
+                        size = nrow(Boston), replace = TRUE,
+                        prob = c(2/3, 1/3)))
+
+Boston.Train <- Boston %>%
+  filter(rolle == "Training") %>%
+  select(-rolle)
+
+Boston.Test <- Boston %>%
+  filter(rolle == "Test") %>%
+  select(-rolle)
+```
+
+Die Funktion `ggpairs()` aus dem Paket [GGally](https://ggobi.github.io/ggally/) erlaubt eine Gesamtübersicht über die Verteilung der Daten:
+```{r, message=FALSE}
+# Einmalig installieren:
+# install.packages("GGally")
+
+library(GGally)
+ggpairs(Boston.Train)
+```
+
+\newpage
+
+Welche der angegebenen Variablen hat den stärksten bivariaten Zusammenhang mit der Zielvariable `medv`?
+
+A.  `age`
+B.  `chas`
+C.  `indus`
+D.  `lstat`
+E.  `rm`
+
+
+Eine multiple Regression mit allen Variablen ergibt folgendes Ergebnis:
+
+```{r}
+lm.full <- lm(medv ~ age + chas + indus + lstat + rm, data = Boston.Train)
+summary(lm.full)
+```
+
+Für welche der angegebenen Variablen kann $H_0: \beta_j=0$ *nicht* verworfen werden?
+
+A.  `age`
+B.  `chas`
+C.  `indus`
+D.  `lstat`
+E.  `rm`
+
+\newpage
+
+Eine multiple Regression mit allen Variablen außer `age` ergibt folgendes Ergebnis:^[Ein solches Vorgehen ist eigentlich *nicht* empfehlenswert. Es gibt *bessere* Verfahren zur Variablenselektion, siehe Literatur.]
+
+```{r}
+lm.red <- lm(medv ~ chas + indus + lstat + rm, data = Boston.Train)
+summary(lm.red)
+```
+
+Stimmt die Aussage: *Die Modellanpassung $R^2$ ist im reduzierten Modell besser als im vollen Modell*?
+
+-  Ja
+-  Nein
+
+\vspace{2cm}
+
+Vorhersage:
+
+```{r}
+ydach.full <- predict(lm.full, newdata = Boston.Test)
+ydach.red <- predict(lm.red, newdata = Boston.Test)
+```
+
+Mit welchen Daten sollten die Vorhersagen `pred.xxx` zur Evaluierung verglichen werden?
+
+A.  Mit der $y$-Variable aus den Trainingsdaten.
+B.  Mit den $x$-Variablen aus den Trainingsdaten.
+C.  Mit der $y$-Variable aus den Testdaten.^[Diese sind im Anwendungsfall unbekannt.]
+D.  Mit den $x$-Variablen aus den Testdaten.
+
+\newpage
+
+```{r}
+# Wahre Werte
+ytest <- Boston.Test$medv 
+
+# Mittlerer absoluter Fehler:
+abs(ytest - ydach.full) %>%
+  mean()
+
+abs(ytest - ydach.red) %>%
+  mean()
+```
+
+Welches Modell konnte besser vorhersagen?
+
+A.  `lm.full`
+B.  `lm.red`
+
+
