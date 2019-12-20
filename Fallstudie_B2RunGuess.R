@@ -7,6 +7,15 @@
 
 # Was schätzen Sie, wie lang war die durchschnittliche Laufzeit der FOM-Männer in Minuten? 
 # Was schätzen Sie, wie lang war die durchschnittliche Laufzeit der FOM-Frauen in Minuten? 
+# Welches Geschlecht haben Sie? ###########################
+## Hinweise:
+# Im Rahmen einer freiwilligen Onlineumfrage wurden zu Beginn des Semsters den Studierenden folgende Fragen gestellt:
+
+# Am 28.05.2019 nahmen auch wieder FOM Studierende, zusammen mit einigen Dozent*innen und Mitarbeiter*innen der FOM 
+# am B2Run in Dortmund teil. Die Laufstrecke betrug dabei 6,2 km. 
+
+# Was schätzen Sie, wie lang war die durchschnittliche Laufzeit der FOM-Männer in Minuten? 
+# Was schätzen Sie, wie lang war die durchschnittliche Laufzeit der FOM-Frauen in Minuten? 
 # Welches Geschlecht haben Sie? 
 # Wie regelmäßig waren Sie letztes Jahr joggen? 
 
@@ -47,7 +56,7 @@ B2RunGuess <- B2RunGuess %>%
   rename(lauf_w = Was.schätzen.Sie..wie.lang.war.die.durchschnittliche.Laufzeit.der.FOM.Frauen.in.Minuten.) %>%
   na.omit() %>%
   mutate(joggen = factor(joggen, ordered = TRUE, levels=c("Ich war nicht joggen", "Nicht monatlich, aber ich war dieses Jahr schon joggen.",
-                                                           "Nicht wöchentlich, aber mindestens 1x im Monat", "Mindestens 1x die Woche"))) %>%
+                                                          "Nicht wöchentlich, aber mindestens 1x im Monat", "Mindestens 1x die Woche"))) %>%
   select(geschlecht, joggen, lauf_w, lauf_m)
 
 inspect(B2RunGuess)
@@ -62,6 +71,5 @@ inspect(B2RunGuess)
 # - Können "regelmäßige" Jogger die Laufzeit besser einschätzen?
 # - ...
 
-# Hinweis:
-# Evtl. ist eine weitere Datenvorverarbeitung nötig.
+
 
