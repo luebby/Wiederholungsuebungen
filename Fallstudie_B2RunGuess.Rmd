@@ -5,6 +5,9 @@ date:  "`r Sys.Date()`"
 output: ioslides_presentation
 ---
 
+<!-- Hinweis: sollten Umlaute wie "ä" nicht richtig dargestellt werden: File -> Reopen With Encoding -> UTF-8  -->
+
+
 ```{r setup, include=FALSE}
 ###########################
 ## Vorbereitung:
@@ -23,7 +26,7 @@ B2Run2019 <- B2Run %>%
 ## Vorbereitung:
 
 # Daten herunterladen:
-B2RunGuess <- read.csv2("http://statistix.org/Data/results-survey635569.csv", na.strings = "")
+B2RunGuess <- read.csv2("http://statistix.org/Data/results-survey635569.csv", na.strings = "", encoding = "UTF-8")
 
 # Vorverarbeitung:
 # 1. Variablen umbenennen

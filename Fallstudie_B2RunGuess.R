@@ -1,13 +1,7 @@
+# Hinweis: sollten Umlaute wie "ä" nicht richtig dargestellt werden: 
+# File -> Reopen With Encoding -> UTF-8
+
 ###########################
-## Hinweise:
-# Im Rahmen einer freiwilligen Onlineumfrage wurden zu Beginn des Semsters den Studierenden folgende Fragen gestellt:
-
-# Am 28.05.2019 nahmen auch wieder FOM Studierende, zusammen mit einigen Dozent*innen und Mitarbeiter*innen der FOM 
-# am B2Run in Dortmund teil. Die Laufstrecke betrug dabei 6,2 km. 
-
-# Was schätzen Sie, wie lang war die durchschnittliche Laufzeit der FOM-Männer in Minuten? 
-# Was schätzen Sie, wie lang war die durchschnittliche Laufzeit der FOM-Frauen in Minuten? 
-# Welches Geschlecht haben Sie? ###########################
 ## Hinweise:
 # Im Rahmen einer freiwilligen Onlineumfrage wurden zu Beginn des Semsters den Studierenden folgende Fragen gestellt:
 
@@ -41,7 +35,8 @@ favstats(zeit ~ geschlecht, data = B2Run2019)
 ## Vorbereitung:
 
 # Daten herunterladen:
-B2RunGuess <- read.csv2("http://statistix.org/Data/results-survey635569.csv", na.strings = "")
+B2RunGuess <- read.csv2("http://statistix.org/Data/results-survey635569.csv", 
+                        na.strings = "", encoding = "UTF-8")
 
 # Vorverarbeitung:
 # 1. Variablen umbenennen
