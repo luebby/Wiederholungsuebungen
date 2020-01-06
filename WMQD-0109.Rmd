@@ -1,0 +1,48 @@
+---
+title: "Wiederholungsfrage 09.01.2020"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggdag)
+```
+
+Angenommen es gelte folgendes Kausalmodell für das *Testergebnis* (`Y`). Modelliert werden soll der Effekt der *Bildungsausgaben* (`X`). 
+
+Die Variable *Zeit mit Kindern* kann nicht erhoben werden.
+
+```{r, echo=FALSE, out.width="80%", fig.align="center"}
+set.seed(1896)
+school_dag <- dagify(Test ~ Edu,
+                     Income ~ Edu,
+                     Time ~ Edu,
+                     Time ~ Income,
+                     Test ~ Edu,
+                     Test ~ Time,
+                     Exp ~ Edu,
+                     Exp ~ Income,
+                     Class ~ Edu,
+                     Teacher ~ Class,
+                     Class ~ Exp,
+                     Teacher ~ Exp,
+                     Test ~ Class,
+                     Test ~ Teacher,
+                     latent = "Time",
+                     exposure = "Exp",
+                     outcome = "Test",
+                     labels = c("Edu"="Ausbildung\n Eltern",
+                                "Income"="Einkommen\n Eltern",
+                                "Time"="Zeit mit\n Kindern",
+                                "Exp"="Bildungsausgaben",
+                                "Class"="Klassengröße",
+                                "Teacher"="Gehalt\n Lehrer*in",
+                                "Test"="Testergebnis")
+                     )
+
+ggdag(school_dag, text = FALSE, use_labels = "label") + theme_dag_blank() 
+```
+
+Wie lautet die angemessene Modellierungsformel (`Y ~ X + C_i`), d.h. welche Kovariale(n) `C_i` sollten berücksichtigt (adjustiert) werden?^[Beispiel aus: [Daniel T. Kaplan (2012): Statistical Modeling: A Fresh Approach](http://project-mosaic-books.com/?page_id=13), S. 335f.]
