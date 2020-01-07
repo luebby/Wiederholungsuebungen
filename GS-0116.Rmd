@@ -1,0 +1,20 @@
+---
+title: "Wiederholungsfrage 16.01.2020"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+
+Ein Unternehmen produziert eine Menge von 10.000 Stück eines Produktes. Davon haben 100 nur den Fehler A und 50 nur den Fehler B. Zusätzlich haben 50 Stück beide Fehler, A und B.
+
+A.  Wie groß ist die Wahrscheinlichkeit, dass ein Produkt Fehler A hat?
+B.  Wie groß ist die Wahrscheinlichkeit, dass ein Produkt, welches Fehler A hat, auch Fehler B hat?
+C.  Wie groß ist die Wahrscheinlichkeit, dass ein Produkt fehlerhaft ist, also Fehler A oder B hat?
+
+\vspace{2cm}
+
+Eine Betrugserkennungssoftware erkennt einen Betrug zu 99,9\%. Wie groß ist die Wahrscheinlichkeit, dass ein Betrug vorliegt, wenn die Software warnt?
+
+A.  Wenn die Betrugswahrscheinlichkeit 0,1\% beträgt?
+B.  Wenn die Betrugswahrscheinlichkeit 1\% beträgt?
