@@ -39,7 +39,7 @@ library(mosaic)
 data("gender.discrimination", package = "openintro")
 ```
 
-Im Paoer Rosen B and Jerdee T. 1974. Influence of sex role stereotypes on personnel decisions. Journal of Applied Psychology 59(1): 9-14, wird im Rahmen eines randomisierten Experimentes der Frage nachgegangen inwieweit es einen Zusammenhang zwischen Beförderung und Geschlecht gab, siehe auch Video Using Randomization to Analyze a Gender Discrimination Study: [https://youtu.be/2pHhjx9hyM4](https://youtu.be/2pHhjx9hyM4).
+Im Paper Rosen B and Jerdee T. 1974. Influence of sex role stereotypes on personnel decisions. Journal of Applied Psychology 59(1): 9-14, wird im Rahmen eines randomisierten Experimentes der Frage nachgegangen inwieweit es einen Zusammenhang zwischen Beförderung und Geschlecht gab, siehe auch Video Using Randomization to Analyze a Gender Discrimination Study: [https://youtu.be/2pHhjx9hyM4](https://youtu.be/2pHhjx9hyM4).
 
 ```{r, out.width="60%", fig.align="center"}
 # Datenstruktur
