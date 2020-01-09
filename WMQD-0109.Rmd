@@ -1,5 +1,5 @@
 ---
-title: "Wiederholungsfrage 09.01.2020"
+title: "Wiederholungsfragen 09.01.2020"
 output: pdf_document
 
 classoption: a4paper, 14pt
@@ -51,7 +51,8 @@ tally(decision ~ gender, data = gender.discrimination)
 # Anteil befördert
 prop(decision ~ gender, success = "promoted", data = gender.discrimination)
 # Differenz
-diff.stipro <- diffprop(decision ~ gender, success = "promoted", data = gender.discrimination)
+diff.stipro <- diffprop(decision ~ gender, success = "promoted", 
+                        data = gender.discrimination)
 diff.stipro
 # Simulation H_0
 set.seed(1896) 
