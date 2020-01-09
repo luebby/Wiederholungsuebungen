@@ -8,13 +8,6 @@ classoption: a4paper, 14pt
 ```{r setup, include=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ggdag)
-```
-
-Angenommen es gelte folgendes Kausalmodell für das *Testergebnis* (`Y`). Modelliert werden soll der Effekt der *Bildungsausgaben* (`X`). 
-
-Die Variable *Zeit mit Kindern* kann nicht erhoben werden.
-
-```{r, echo=FALSE, out.width="80%", fig.align="center"}
 set.seed(1896)
 school_dag <- dagify(Test ~ Edu,
                      Income ~ Edu,
@@ -41,6 +34,51 @@ school_dag <- dagify(Test ~ Edu,
                                 "Teacher"="Gehalt\n Lehrer*in",
                                 "Test"="Testergebnis")
                      )
+
+library(mosaic)
+data("gender.discrimination", package = "openintro")
+```
+
+Im Paoer Rosen B and Jerdee T. 1974. Influence of sex role stereotypes on personnel decisions. Journal of Applied Psychology 59(1): 9-14, wird im Rahmen eines randomisierten Experimentes der Frage nachgegangen inwieweit es einen Zusammenhang zwischen Beförderung und Geschlecht gab, siehe auch Video Using Randomization to Analyze a Gender Discrimination Study: [https://youtu.be/2pHhjx9hyM4](https://youtu.be/2pHhjx9hyM4).
+
+```{r, out.width="60%", fig.align="center"}
+# Datenstruktur
+str(gender.discrimination)
+# Säulendiagramm
+gf_bar( ~ gender, fill= ~ decision, data = gender.discrimination)
+# Kreuztabelle
+tally(decision ~ gender, data = gender.discrimination)
+# Anteil befördert
+prop(decision ~ gender, success = "promoted", data = gender.discrimination)
+# Differenz
+diff.stipro <- diffprop(decision ~ gender, success = "promoted", data = gender.discrimination)
+diff.stipro
+# Simulation H_0
+set.seed(1896) 
+Nullvtlg <- do(10000)* diffprop(decision ~ shuffle(gender), success = "promoted", 
+                                data = gender.discrimination)
+# Visualisierung
+gf_bar( ~ diffprop, data = Nullvtlg) %>%
+  gf_vline(xintercept = ~ diff.stipro)
+# p-Wert
+prop( ~ (diffprop >= diff.stipro), data = Nullvtlg)
+```
+
+Ist in dieser Studie die Kausalaussage *Diskriminierung durch das Geschlecht* gerechtfertigt?
+
+-  Ja.
+-  Nein.
+
+
+
+\newpage
+
+Angenommen es gelte folgendes Kausalmodell für das *Testergebnis* (`Y`). Modelliert werden soll der Effekt der *Bildungsausgaben* (`X`). 
+
+Die Variable *Zeit mit Kindern* kann nicht erhoben werden.
+
+```{r, echo=FALSE, out.width="80%", fig.align="center"}
+
 
 ggdag(school_dag, text = FALSE, use_labels = "label") + theme_dag_blank() 
 ```
