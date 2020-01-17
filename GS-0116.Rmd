@@ -14,7 +14,7 @@ C.  Wie groß ist die Wahrscheinlichkeit, dass ein Produkt fehlerhaft ist, also 
 
 \vspace{2cm}
 
-Eine Betrugserkennungssoftware erkennt einen Betrug zu 99,9\%. Wie groß ist die Wahrscheinlichkeit, dass ein Betrug vorliegt, wenn die Software warnt?
+Eine Betrugserkennungssoftware macht zu 99,9\% keinen Fehler. Wie groß ist die Wahrscheinlichkeit, dass ein Betrug vorliegt, wenn die Software warnt?
 
 A.  Wenn die Betrugswahrscheinlichkeit 0,1\% beträgt?
 B.  Wenn die Betrugswahrscheinlichkeit 1\% beträgt?
