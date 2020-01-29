@@ -1,0 +1,114 @@
+---
+title: "Wiederholungsfragen 29.01.2020"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE, message=FALSE}
+# install.packages("Sleuth3")
+data("case0101", package = "Sleuth3")
+Motivation <- case0101
+```
+
+Zur Erhebung eines Mietpreisspiegels ziehen Chiara und Alexander aus derselben Population jeweils eine zufällige Stichprobe und berechnen ein $95\%$-Konfidenzintervall für die mittlere Miete $\mu$. Das von Chiara geht von $UG_{\text{Chiara}}$ bis $OG_{\text{Chiara}}$, das von Alexander von $UG_{\text{Alexander}}$ bis $OG_{\text{Alexander}}$ ($UG$: Untere Grenze, $OG$: Obere Grenze.)
+
+Werden beide auf dasselbe Konfidenzintervall kommen, d.h. $UG_{\text{Chiara}}=UG_{\text{Alexander}}$ und $OG_{\text{Chiara}}=OG_{\text{Alexander}}$?
+
+A.  Ja
+B.  Nein
+C.  Wenn $n_{\text{Chiara}}=n_{\text{Alexander}}$ ja, sonst nein.
+
+\vspace{2cm}
+
+Angenommen der es gilt $n_{\text{Chiara}}>n_{\text{Alexander}}$. Was gilt dann?
+
+A.  Chiara hat eine höhere Wahrscheinlichkeit für einen Fehler 2. Art.
+B.  Alexander hat eine höhere Wahrscheinlichkeit für einen Fehler 2. Art.
+C.  Beide haben eine gleich hohe Wahrscheinlichkeit für einen Fehler 2. Art.
+
+\vspace{2cm}
+
+Im Paper Amabile, T. M. (1985). *Motivation and creativity: Effects of motivational orientation on creative writers*. Journal of personality and social psychology, 48(2), 393, wird ein Kreativitässcore (`Score`)  und die Motivation (`Treatment`, extrinsisch (`Extrinsic`) bzw. intrinsisch (`Intrinsic`)) analysiert. Dabei erhielten die Teilnehmeden vor der Kreativitätsmessung zufällig zugeordnet einen Fragebogen, der die jeweilige Motivation fokussierte. 
+
+```{r, message=FALSE}
+library(mosaic)
+str(Motivation)
+head(Motivation)
+```
+
+\vspace{2cm}
+
+Vor der Behandlung, d.h. der zufälligen Zuordnung zu den beiden Gruppen, extrinsischer oder intrinsicher Motivation, wurde ein Vorab-Kreativitätsscore ermittelt. Welche Aussage stimmt:
+
+A.  Es gibt Grund zur Annahme, dass die Kreativität in beiden Gruppen annährend identisch verteilt ist.
+B.  Es gibt keinen Grund zur Annahme, dass die Kreativität in beiden Gruppen annährend identisch verteilt ist.
+
+\vspace {2cm}
+
+Extrinsisch motivierte Teilnehmer\*innen auswählen, Kennzahlen ausgeben:
+
+```{r, message=FALSE}
+Extrinsic <- Motivation %>%
+  filter(Treatment == "Extrinsic")
+favstats( ~ Score, data = Extrinsic)
+```
+
+Um ein Konfidenzintervall zu bestimmen werden die Daten resampled:
+
+```{r, fig.align="center", out.width="60%"}
+set.seed(1896)
+# Bootstrapping
+Bootvtlg <- do(1000) * mean(~ Score, data = resample(Extrinsic))
+# Bootstrap-Verteilung
+gf_histogram( ~ mean, data = Bootvtlg)
+# 95%-Konfidenzintervall
+quantile( ~ mean, data = Bootvtlg, probs=c(0.025,0.975))
+```
+
+```{r, include=FALSE}
+ki<-quantile( ~ mean, data = Bootvtlg, probs=c(0.025,0.975))
+```
+
+
+
+Stimmt die Aussage: *95\% der Teilnehmenden erreichen einen Kreativitätsscore zwischen `r floor(ki[1]*10)/10` und `r ceiling(ki[2]*10)/10`*?
+
+- Ja
+- Nein
+
+
+\newpage
+
+Vergleich Kreativitätsscore mit intrinsicher und extrinsischer Motivation:
+
+```{r}
+# Mittelwerte 
+mean(Score ~ Treatment, data = Motivation)
+```
+
+```{r}
+# Differenz der Mittelwerte
+diff.stipro <- diffmean(Score ~ Treatment, data = Motivation)
+diff.stipro
+```
+
+
+```{r, out.width="80%", fig.align="center"}
+# Simulation unter H_0
+Nullvtlg <- do(10000) * diffmean(Score ~ shuffle(Treatment), data = Motivation) 
+# Permutationsverteilung
+gf_histogram( ~ diffmean, data = Nullvtlg, center = 0, bins = 21) %>%
+  gf_vline(xintercept = ~ diff.stipro)
+# p-Wert
+prop( ~ abs(diffmean) >= abs(diff.stipro), data = Nullvtlg)
+```
+
+Fassen Sie das Ergebnis der Analyse zusammen. Wie lauten die Forschungsfrage, die Hypothesen und das vorläufige Ergebnis?
+
+
+
