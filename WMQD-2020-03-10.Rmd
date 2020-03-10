@@ -15,12 +15,6 @@ A.  Die Messung ist nicht objektiv
 B.  Die Messung ist nicht reliabel
 C.  Die Messung ist nicht valide
 
-\vspace{2cm}
-
-Ist die Anzahl der Downloads einer Lernunterlage ein valides Messinstrument für die Güte der Vermittlung der Lerninhalte?
-
-- Ja
-- Nein
 
 \vspace{2cm}
 
@@ -38,8 +32,7 @@ B.  Kategorial – ordinal
 C.  Numerisch – intervallskaliert
 D.  Numerisch – verhältnisskaliert
 
-
-\newpage
+\vspace{2cm}
 
 Eine Analystin ermittelt im Online-Campus die Anzahl der Downloads je Medium. Um welche Form der Datenerhebung handelt es sich?
 
