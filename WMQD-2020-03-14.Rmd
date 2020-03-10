@@ -1,0 +1,101 @@
+---
+title: "Wiederholungsfragen 14.03.2020"
+output: pdf_document
+
+classoption: a4paper, 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Es gelte: *Studierende, die die Vorlesung aktiv nacharbeiten, bestehen die Klausur*.
+
+Susi arbeit aktiv nach und folgert daraus, dass sie die Klausur besteht.
+
+Welche Schlussart liegt vor?
+
+A.  Induktion
+B.  Deduktion
+C.  Abduktion
+
+\vspace{2cm}
+
+Ist die Aussage *Studierende, die die Vorlesung aktiv nacharbeiten, bestehen die Klausur* im Sinne Poppers eine wissenschaftliche Hypothese?
+
+- Ja
+- Nein
+
+\vspace{2cm}
+
+Die Vorlesung X konnte man auch gut ohne kontinuierliche Mitarbeit bestehen. Dies gilt leider nicht für diese Vorlesung. Welches Gütekritierium des wissenschaftlichen Schlusses *Kontinuierliche Mitarbeit ist zum Bestehen nicht erforderlich* primär verletzt?
+
+A.  Interne Validität
+B.  Externe Validität
+
+\vspace{2cm}
+
+Ist das Merkmal *intensive Nacharbeit* eine manifeste Variable?
+
+- Ja
+- Nein
+
+\newpage
+
+Angenommen eine Hochschule misst *intensive Nacharbeit* durch die Zeit, die ein Studierender im Online Campus verbringt. 
+
+Welches Gütekriterium einer Messung ist primär verletzt?
+
+A.  Genauigkeit
+B.  Objektivität
+C.  Reliabilität
+D.  Validität
+
+\vspace{2cm}
+
+
+Welches Skalenniveau hat die Variable *Anzahl der Stunden im OC*?
+
+A.  Kategorial – nominal
+B.  Kategorial – ordinal
+C.  Numerisch – intervallskaliert
+D.  Numerisch – verhältnisskaliert
+
+\vspace{2cm}
+
+Welches Skalenniveau hat die Variable *Art des Mediums* (Video, Audio, Dokument)?
+
+A.  Kategorial – nominal
+B.  Kategorial – ordinal
+C.  Numerisch – intervallskaliert
+D.  Numerisch – verhältnisskaliert
+
+\vspace{2cm}
+
+Eine Analystin ermittelt im Online-Campus die Anzahl der Downloads je Medium. Um welche Form der Datenerhebung handelt es sich?
+
+A.  Beobachtungsstudie
+B.  Experiment
+
+\vspace{2cm}
+
+Welche Variable ist hier inhaltlich die unabhängige Variable?
+
+A.	Medium 
+B.	Anzahl Downloads 
+
+\vspace{2cm}
+
+Die Analystin stellt fest: *Videos werden häufiger heruntergeladen*. Ist hier eine Kausalaussage *Das Medium Video erhöht die Anzahl der Downloads* gerechtfertigt?
+
+-  Ja
+-  Nein
+
+\vspace{2cm}
+
+Die Analystin fragt im Freundeskreis (Facebook) 10000 Personen, welches Medium sie bevorzugen. Kann sie von ihrem Ergebnis direkt und unverzerrt auf die Population (alle Menschen) schließen?
+
+-  Ja
+-  Nein
+
+
